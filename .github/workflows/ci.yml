@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload debug APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: siyuan-remote-debug
           path: app/build/outputs/apk/debug/*.apk
@@ -46,7 +46,7 @@ jobs:
 
       - name: Upload reports on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: reports
           path: app/build/reports/
