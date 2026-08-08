@@ -38,15 +38,15 @@ curl -s http://localhost:6806/api/system/version
 # {"code":0,"msg":"","data":"3.x.y"}
 ```
 
-## 2. Set an access authorization code
+## 2. Set a lock screen password
 
-**This is mandatory, not optional.** The kernel explicitly refuses any non-local client when no access authorization code is configured:
+**This is mandatory, not optional.** The kernel explicitly refuses any non-local client when no lock screen password is configured:
 
 > Auth failed: for security reasons, please set [Lock screen password] when using non-127.0.0.1 access
 
-You can set it with `--accessAuthCode=...` as above, or inside SiYuan under **Settings → About → Access authorization code**.
+You can set it with `--accessAuthCode=...` as above, or inside SiYuan under **Settings → About → Lock screen password**. Those are the same value: the flag is what the kernel calls it, the label is what the UI calls it.
 
-If the app shows *"Your server has no access authorization code set"*, this is what it means.
+If the app shows *"Your server has no lock screen password set"*, this is what it means.
 
 Pick something long. It is the only thing between the network and your entire knowledge base, and the app will store it on the phone indefinitely.
 
@@ -60,7 +60,7 @@ Bind the container to the host and use the host's LAN address:
 http://192.168.1.50:6806
 ```
 
-Plain HTTP over a trusted LAN is what most people do, and the app allows cleartext for exactly this reason. Everything, including the access code on login, crosses your LAN unencrypted. If you do not trust your LAN, use HTTPS.
+Plain HTTP over a trusted LAN is what most people do, and the app allows cleartext for exactly this reason. Everything, including the password on login, crosses your LAN unencrypted. If you do not trust your LAN, use HTTPS.
 
 ### From outside: Tailscale (simplest)
 
@@ -100,15 +100,15 @@ The app deliberately has no "ignore certificate errors" switch. A prompt that tr
 
 1. **Server address**: `http://192.168.1.50:6806`
 2. **Fallback address** (optional): `https://siyuan.your-tailnet.ts.net`
-3. **Access authorization code**: the value from step 2.
+3. **Password**: the value from step 2.
 
 ## Troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
 | "No SiYuan kernel answered at that address" | Wrong host or port, kernel bound to `127.0.0.1`, firewall | `curl http://ADDRESS/api/system/version` from another machine |
-| "Your server has no access authorization code set" | `--accessAuthCode` missing | Set it and restart the kernel |
-| "The server rejected that access authorization code" | Typo, or the code changed on the server | Re-enter it in the app |
+| "Your server has no lock screen password set" | `--accessAuthCode` missing | Set it and restart the kernel |
+| "The server rejected that password" | Typo, or it changed on the server | Re-enter it in the app |
 | "Too many failed attempts: the server now asks for a captcha" | The kernel counts wrong attempts globally | The app renders the captcha; enter it once and the counter resets |
 | Editor loads but never updates | WebSocket not proxied | Fix the `Upgrade` headers in your reverse proxy |
 | Editor renders oddly | Old Android System WebView | Update it from the Play Store; Settings shows the installed version |

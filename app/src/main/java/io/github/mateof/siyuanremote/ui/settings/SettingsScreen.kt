@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import io.github.mateof.siyuanremote.R
 import io.github.mateof.siyuanremote.data.AppSettings
 import io.github.mateof.siyuanremote.network.Notebook
+import io.github.mateof.siyuanremote.update.UpdateSection
+import io.github.mateof.siyuanremote.update.UpdateUiState
 import io.github.mateof.siyuanremote.util.WebViewInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +52,7 @@ fun SettingsScreen(
     appVersion: String,
     webViewInfo: WebViewInfo,
     biometricsAvailable: Boolean,
+    updateState: UpdateUiState,
     callbacks: SettingsCallbacks,
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
@@ -188,6 +191,23 @@ fun SettingsScreen(
                     subtitle = stringResource(R.string.settings_mixed_content_summary),
                     checked = settings.allowMixedContent,
                     onCheckedChange = callbacks.onMixedContentChanged,
+                )
+                HorizontalDivider()
+            }
+
+            item { SectionHeader(stringResource(R.string.settings_section_updates)) }
+            item {
+                SwitchRow(
+                    title = stringResource(R.string.settings_update_checks),
+                    subtitle = stringResource(R.string.settings_update_checks_summary),
+                    checked = settings.updateChecksEnabled,
+                    onCheckedChange = callbacks.onUpdateChecksChanged,
+                )
+                UpdateSection(
+                    state = updateState,
+                    onCheck = callbacks.onCheckUpdates,
+                    onDownload = callbacks.onDownloadUpdate,
+                    onInstall = callbacks.onInstallUpdate,
                 )
                 HorizontalDivider()
             }
@@ -406,4 +426,8 @@ data class SettingsCallbacks(
     val onCaptureNotificationChanged: (Boolean) -> Unit,
     val onNotebookSelected: (Notebook?) -> Unit,
     val onLoadNotebooks: () -> Unit,
+    val onUpdateChecksChanged: (Boolean) -> Unit,
+    val onCheckUpdates: () -> Unit,
+    val onDownloadUpdate: () -> Unit,
+    val onInstallUpdate: () -> Unit,
 )

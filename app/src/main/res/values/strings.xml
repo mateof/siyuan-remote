@@ -9,23 +9,23 @@
     <string name="setup_primary_url_hint">Host and port of your kernel. Plain http is fine on a local network.</string>
     <string name="setup_fallback_url">Fallback address (optional)</string>
     <string name="setup_fallback_url_hint">Tried when the first address does not answer, for example your VPN or reverse proxy.</string>
-    <string name="setup_auth_code">Access authorization code</string>
-    <string name="setup_auth_code_hint">Settings → About → Access authorization code, in SiYuan.</string>
+    <string name="setup_auth_code">Password</string>
+    <string name="setup_auth_code_hint">Your SiYuan lock screen password: Settings → About → Lock screen password. In Docker it is the value of --accessAuthCode.</string>
     <string name="setup_captcha">Captcha</string>
     <string name="setup_connect">Connect</string>
-    <string name="setup_storage_notice">The code is encrypted with a key held in the Android Keystore and is only removed when you sign out.</string>
+    <string name="setup_storage_notice">The password is encrypted with a key held in the Android Keystore and is only removed when you sign out.</string>
     <string name="setup_error_unreachable">No SiYuan kernel answered at that address.</string>
-    <string name="setup_error_wrong_code">The server rejected that access authorization code.</string>
+    <string name="setup_error_wrong_code">The server rejected that password.</string>
     <string name="setup_error_captcha">Too many failed attempts: the server now asks for a captcha.</string>
-    <string name="setup_error_no_auth_code">Your server has no access authorization code set, so it refuses remote clients. Set one in SiYuan under Settings → About.</string>
-    <string name="setup_error_session_rejected">The stored code no longer works. Enter it again.</string>
+    <string name="setup_error_no_auth_code">Your server has no lock screen password set, so it refuses remote clients. Set one in SiYuan under Settings → About → Lock screen password.</string>
+    <string name="setup_error_session_rejected">The stored password no longer works. Enter it again.</string>
 
     <!-- Errors and status -->
     <string name="error_unreachable_title">Server unreachable</string>
     <string name="error_unreachable_body">Nothing answered at:\n%1$s</string>
     <string name="error_page_title">Could not load the page</string>
     <string name="error_session_title">Session rejected</string>
-    <string name="error_session_body">The server keeps asking for authentication. The access authorization code has probably changed.</string>
+    <string name="error_session_body">The server keeps asking for authentication. The lock screen password has probably changed.</string>
 
     <!-- Actions -->
     <string name="action_retry">Retry</string>
@@ -33,8 +33,8 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_unlock">Unlock</string>
     <string name="action_back">Back</string>
-    <string name="action_show_code">Show code</string>
-    <string name="action_hide_code">Hide code</string>
+    <string name="action_show_code">Show password</string>
+    <string name="action_hide_code">Hide password</string>
     <string name="action_quick_capture">Quick capture</string>
     <string name="action_sync">Sync now</string>
     <string name="action_reload">Reload</string>
@@ -99,8 +99,8 @@
     <string name="settings_save_server">Save addresses</string>
     <string name="settings_active_url">Currently connected to %1$s</string>
     <string name="settings_sign_out">Sign out</string>
-    <string name="settings_sign_out_confirm">This deletes the stored access code and the session. You will have to enter the code again.</string>
-    <string name="settings_session_explainer">The app stays signed in indefinitely: when the server session expires it logs in again in the background using the stored code.</string>
+    <string name="settings_sign_out_confirm">This deletes the stored password and the session. You will have to enter it again.</string>
+    <string name="settings_session_explainer">The app stays signed in indefinitely: when the server session expires it logs in again in the background using the stored password.</string>
 
     <string name="settings_section_security">Security</string>
     <string name="settings_app_lock">App lock</string>
@@ -142,4 +142,25 @@
     <string name="settings_webview_unknown">unknown</string>
     <string name="settings_webview_outdated_hint">This WebView is older than Chromium 108 and may render the editor incorrectly.</string>
     <string name="settings_disclaimer">Unofficial client. Not affiliated with the SiYuan project.</string>
+    <!-- Updates -->
+    <string name="settings_section_updates">Updates</string>
+    <string name="settings_update_checks">Check for new versions</string>
+    <string name="settings_update_checks_summary">Looks at this project\'s GitHub releases once a day and notifies you</string>
+    <string name="notification_channel_updates">App updates</string>
+    <string name="notification_channel_updates_description">Tells you when a newer release of this app is published</string>
+    <string name="update_notification_title">SiYuan Remote %1$s is available</string>
+    <string name="update_notification_text">Tap to see what changed and install it</string>
+    <string name="update_available_title">Version %1$s is available</string>
+    <string name="update_installed_version">You are running %1$s</string>
+    <string name="update_up_to_date">You are on the latest version</string>
+    <string name="update_check_now">Check now</string>
+    <string name="update_download">Download</string>
+    <string name="update_downloading">Downloading… %1$d%%</string>
+    <string name="update_download_failed">The download failed. Try again or get the APK from GitHub.</string>
+    <string name="update_install">Install</string>
+    <string name="update_install_failed">No installer could handle the file</string>
+    <string name="update_later">Later</string>
+    <string name="update_skip">Skip this version</string>
+    <string name="update_allow_unknown_sources">Allow this app to install apps, then press Install again</string>
+    <string name="update_debug_signature_warning">This is a debug build. Android will refuse to install a release APK over it because the signatures differ.</string>
 </resources>

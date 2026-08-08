@@ -26,6 +26,12 @@ data class AppSettings(
     val captureNotificationEnabled: Boolean = false,
     val syncOnResume: Boolean = false,
 
+    /** Look for newer releases on GitHub and notify about them. */
+    val updateChecksEnabled: Boolean = true,
+    val lastUpdateCheckAt: Long = 0L,
+    /** Version the user chose to be left alone about. */
+    val skippedUpdateVersion: String = "",
+
     /** Notebook that quick capture appends to. Empty means "ask every time". */
     val captureNotebookId: String = "",
     val captureNotebookName: String = "",

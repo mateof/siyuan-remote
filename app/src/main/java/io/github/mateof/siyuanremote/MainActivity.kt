@@ -61,6 +61,9 @@ import io.github.mateof.siyuanremote.ui.setup.SetupScreen
 import io.github.mateof.siyuanremote.ui.setup.StatusScreen
 import io.github.mateof.siyuanremote.ui.settings.SettingsActivity
 import io.github.mateof.siyuanremote.ui.theme.SiyuanRemoteTheme
+import io.github.mateof.siyuanremote.update.UpdateCheckWorker
+import io.github.mateof.siyuanremote.update.UpdateDialog
+import io.github.mateof.siyuanremote.update.UpdateViewModel
 import io.github.mateof.siyuanremote.ui.web.Downloader
 import io.github.mateof.siyuanremote.ui.web.QuickActionButton
 import io.github.mateof.siyuanremote.ui.web.SiyuanWebChromeClient
@@ -77,6 +80,7 @@ import java.io.File
 class MainActivity : FragmentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val updateViewModel: UpdateViewModel by viewModels()
 
     private var webView: WebView? = null
     private var fileChooserCallback: ValueCallback<Array<Uri>>? = null
@@ -184,6 +188,7 @@ class MainActivity : FragmentActivity() {
 
         KeepScreenOnEffect(loaded.keepScreenOn)
         SyncOnResumeEffect(loaded.syncOnResume)
+        UpdateCheckEffect(loaded.updateChecksEnabled)
 
         if (loaded.appLockEnabled && AppLock.isAvailable(this)) {
             var unlocked by rememberSaveable { mutableStateOf(false) }
@@ -196,6 +201,8 @@ class MainActivity : FragmentActivity() {
                 return
             }
         }
+
+        UpdateAvailableDialog()
 
         when (val state = uiState) {
             MainUiState.Loading -> LoadingBox()
@@ -564,6 +571,51 @@ class MainActivity : FragmentActivity() {
             lifecycleOwner.lifecycle.addObserver(observer)
             onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
         }
+    }
+
+    /**
+     * Schedules or cancels the daily background check, and does one check now so
+     * a release published while the app was closed is noticed on the next open.
+     */
+    @Composable
+    private fun UpdateCheckEffect(enabled: Boolean) {
+        LaunchedEffect(enabled) {
+            if (enabled) {
+                UpdateCheckWorker.schedule(applicationContext)
+                updateViewModel.check()
+            } else {
+                UpdateCheckWorker.cancel(applicationContext)
+            }
+        }
+    }
+
+    @Composable
+    private fun UpdateAvailableDialog() {
+        val state by updateViewModel.state.collectAsStateWithLifecycle()
+        if (state.available == null || state.dismissed) return
+
+        UpdateDialog(
+            state = state,
+            onDownload = updateViewModel::download,
+            onInstall = { installUpdate() },
+            onSkip = updateViewModel::skipCurrent,
+            onDismiss = updateViewModel::dismiss,
+        )
+    }
+
+    /**
+     * Android refuses the install unless this app is allowed to install unknown
+     * apps, so the first attempt may need a detour through system settings.
+     */
+    private fun installUpdate() {
+        val apk = updateViewModel.state.value.downloaded ?: return
+        if (!updateViewModel.canInstall()) {
+            toast(getString(R.string.update_allow_unknown_sources))
+            runCatching { startActivity(updateViewModel.unknownSourcesIntent()) }
+            return
+        }
+        runCatching { startActivity(updateViewModel.installIntent(apk)) }
+            .onFailure { toast(getString(R.string.update_install_failed)) }
     }
 
     @Composable

@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!-- In app updates: the app is distributed outside any store. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- Audio blocks in the SiYuan editor record through the WebView. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Only needed to write downloads on API 28 and below. -->

@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -42,6 +43,9 @@ class SettingsRepository @Inject constructor(
     suspend fun setTextZoom(zoom: Int) = edit { it[Keys.TEXT_ZOOM] = zoom.coerceIn(50, 200) }
     suspend fun setCaptureNotificationEnabled(enabled: Boolean) = edit { it[Keys.CAPTURE_NOTIFICATION] = enabled }
     suspend fun setSyncOnResume(enabled: Boolean) = edit { it[Keys.SYNC_ON_RESUME] = enabled }
+    suspend fun setUpdateChecksEnabled(enabled: Boolean) = edit { it[Keys.UPDATE_CHECKS] = enabled }
+    suspend fun setLastUpdateCheckAt(millis: Long) = edit { it[Keys.LAST_UPDATE_CHECK] = millis }
+    suspend fun setSkippedUpdateVersion(version: String) = edit { it[Keys.SKIPPED_UPDATE] = version }
     suspend fun setCaptureAsTask(enabled: Boolean) = edit { it[Keys.CAPTURE_AS_TASK] = enabled }
     suspend fun setCaptureTimestamp(enabled: Boolean) = edit { it[Keys.CAPTURE_TIMESTAMP] = enabled }
 
@@ -75,6 +79,9 @@ class SettingsRepository @Inject constructor(
         textZoom = this[Keys.TEXT_ZOOM] ?: 100,
         captureNotificationEnabled = this[Keys.CAPTURE_NOTIFICATION] ?: false,
         syncOnResume = this[Keys.SYNC_ON_RESUME] ?: false,
+        updateChecksEnabled = this[Keys.UPDATE_CHECKS] ?: true,
+        lastUpdateCheckAt = this[Keys.LAST_UPDATE_CHECK] ?: 0L,
+        skippedUpdateVersion = this[Keys.SKIPPED_UPDATE].orEmpty(),
         captureNotebookId = this[Keys.CAPTURE_NOTEBOOK_ID].orEmpty(),
         captureNotebookName = this[Keys.CAPTURE_NOTEBOOK_NAME].orEmpty(),
         captureAsTask = this[Keys.CAPTURE_AS_TASK] ?: false,
@@ -94,6 +101,9 @@ class SettingsRepository @Inject constructor(
         val TEXT_ZOOM = intPreferencesKey("text_zoom")
         val CAPTURE_NOTIFICATION = booleanPreferencesKey("capture_notification")
         val SYNC_ON_RESUME = booleanPreferencesKey("sync_on_resume")
+        val UPDATE_CHECKS = booleanPreferencesKey("update_checks")
+        val LAST_UPDATE_CHECK = longPreferencesKey("last_update_check")
+        val SKIPPED_UPDATE = stringPreferencesKey("skipped_update")
         val CAPTURE_NOTEBOOK_ID = stringPreferencesKey("capture_notebook_id")
         val CAPTURE_NOTEBOOK_NAME = stringPreferencesKey("capture_notebook_name")
         val CAPTURE_AS_TASK = booleanPreferencesKey("capture_as_task")

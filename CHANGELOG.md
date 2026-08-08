@@ -6,6 +6,23 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0]
+
+### Added
+- In app updates. A daily background check asks this project's GitHub releases for a
+  newer version, notifies you when one exists, and downloads plus installs it without
+  leaving the app. Reachable from **Settings → Updates** with a manual check, and each
+  version can be skipped individually. Turn the whole thing off with one switch.
+
+### Changed
+- The credential field is now labelled **Password**, not "access authorization code".
+  SiYuan's own interface calls it the lock screen password (Settings → About), and the
+  old label matched nothing the user could see anywhere. The hint now points at both
+  that label and the `--accessAuthCode` Docker flag, which are the same value.
+
+### Fixed
+- Release notes no longer swallow the changelog's trailing link definitions.
+
 ## [0.1.0]
 
 First release.
@@ -25,5 +42,6 @@ First release.
 - Android System WebView version check with a warning below Chromium 108.
 - English and Spanish translations.
 
-[Unreleased]: https://github.com/mateof/siyuan-remote/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mateof/siyuan-remote/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/mateof/siyuan-remote/releases/tag/v0.2.0
 [0.1.0]: https://github.com/mateof/siyuan-remote/releases/tag/v0.1.0

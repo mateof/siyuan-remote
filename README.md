@@ -28,13 +28,14 @@ You can, and it works. SiYuan serves a full mobile UI to any Chromium browser. W
 | `blob:` downloads (exports) | Usually fails silently | Saved to Downloads |
 | Biometric lock in front of your notes | No | Optional, on by default |
 | Automatic LAN then VPN fallback | No | Yes |
+| Tells you when a new version ships | No | Yes, with one tap to install |
 
 Everything else, the whole editor, is the real SiYuan frontend served by your own kernel. This app deliberately does **not** reimplement the editor.
 
 ## Requirements
 
 - A SiYuan kernel you can reach from the phone (Docker, bare metal, VPS, Tailscale, reverse proxy).
-- An **access authorization code** set on that server. The kernel refuses non-local clients without one.
+- A **lock screen password** set on that server (SiYuan calls it that in Settings → About; the Docker flag is `--accessAuthCode`). The kernel refuses non-local clients without one.
 - Android 8.0 (API 26) or newer, with a reasonably current Android System WebView (Chromium 108+).
 
 Full server-side instructions, including a `docker-compose.yml` and HTTPS notes, are in **[docs/SETUP.md](docs/SETUP.md)**.
@@ -49,14 +50,14 @@ Releases are signed with a developer key, so an APK from GitHub will not upgrade
 
 1. Enter your server address, for example `http://192.168.1.50:6806`. The scheme is optional; plain HTTP is accepted on a local network.
 2. Optionally add a fallback address, for example your Tailscale hostname. The app probes the primary first and falls back automatically, then remembers whichever answered.
-3. Enter the access authorization code from SiYuan under **Settings → About → Access authorization code**.
+3. Enter the password from SiYuan under **Settings → About → Lock screen password**.
 4. Done. The editor loads and the app stays signed in from then on.
 
 ## How the indefinite session works
 
 The kernel issues a session cookie that lasts at most 30 days (`maxAge = 60 * 60 * 24 * 30` in `kernel/model/session.go`). No client can extend that server side.
 
-So the app stores your access code encrypted with an AES-256/GCM key held in the Android Keystore. When the cookie expires, the kernel redirects the WebView to `/check-auth`; the app intercepts that redirect, replays the login in the background over the shared cookie jar, and reloads the page you were heading to. You never see a login form again until you press **Sign out**, which is the single action that deletes the stored code.
+So the app stores that password encrypted with an AES-256/GCM key held in the Android Keystore. When the cookie expires, the kernel redirects the WebView to `/check-auth`; the app intercepts that redirect, replays the login in the background over the shared cookie jar, and reloads the page you were heading to. You never see a login form again until you press **Sign out**, which is the single action that deletes the stored code.
 
 That trade is explicit: the phone holds a credential that opens your whole knowledge base. That is why the **biometric app lock is enabled by default**. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#authentication) for the details and [SECURITY.md](SECURITY.md) for the threat model.
 
@@ -72,6 +73,7 @@ All of these are off or configurable in **Settings**. See [docs/FEATURES.md](doc
 - **Dual address with automatic fallback**, for the LAN at home and a VPN or reverse proxy outside.
 - **Force desktop interface**, useful on tablets and foldables.
 - **Sync on resume**, if your kernel has sync configured.
+- **In app updates**: a daily check against this project's GitHub releases, a notification when one lands, and download plus install without leaving the app.
 - **Text size**, **keep screen on**, **external links in a custom tab**.
 
 ## Building

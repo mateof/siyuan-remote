@@ -11,8 +11,8 @@ plugins {
 
 // Single source of truth for the app version. The release workflow greps these
 // two lines to build the git tag, so keep the literal format unchanged.
-val appVersionName = "0.1.0"
-val appVersionCode = 1
+val appVersionName = "0.2.0"
+val appVersionCode = 2
 
 /**
  * Release signing is optional so that anyone can clone and run `assembleRelease`
@@ -100,6 +100,9 @@ android {
         abortOnError = false
         warningsAsErrors = false
         checkReleaseBuilds = false
+        // It wants to rewrite the "--accessAuthCode" flag named in a hint string
+        // as an em dash, which would document a flag that does not work.
+        disable += "TypographyDashes"
     }
 
     applicationVariants.all {
@@ -142,6 +145,7 @@ dependencies {
     implementation(libs.webkit)
     implementation(libs.browser)
     implementation(libs.biometric)
+    implementation(libs.work.runtime)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

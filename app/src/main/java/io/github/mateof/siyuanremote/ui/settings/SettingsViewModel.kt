@@ -58,6 +58,7 @@ class SettingsViewModel @Inject constructor(
 
     fun setTextZoom(zoom: Int) = launchEdit { settingsRepository.setTextZoom(zoom) }
     fun setSyncOnResume(enabled: Boolean) = launchEdit { settingsRepository.setSyncOnResume(enabled) }
+    fun setUpdateChecks(enabled: Boolean) = launchEdit { settingsRepository.setUpdateChecksEnabled(enabled) }
     fun setCaptureAsTask(enabled: Boolean) = launchEdit { settingsRepository.setCaptureAsTask(enabled) }
     fun setCaptureTimestamp(enabled: Boolean) = launchEdit { settingsRepository.setCaptureTimestamp(enabled) }
     fun setCaptureNotification(enabled: Boolean) = launchEdit {

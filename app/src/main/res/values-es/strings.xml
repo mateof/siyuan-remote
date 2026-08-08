@@ -9,23 +9,23 @@
     <string name="setup_primary_url_hint">Host y puerto de tu kernel. En red local vale http sin cifrar.</string>
     <string name="setup_fallback_url">Dirección alternativa (opcional)</string>
     <string name="setup_fallback_url_hint">Se prueba cuando la primera no responde: tu VPN o tu proxy inverso, por ejemplo.</string>
-    <string name="setup_auth_code">Código de acceso</string>
-    <string name="setup_auth_code_hint">En SiYuan: Ajustes → Acerca de → Código de autorización de acceso.</string>
+    <string name="setup_auth_code">Contraseña</string>
+    <string name="setup_auth_code_hint">La contraseña de bloqueo de pantalla de SiYuan: Ajustes → Acerca de → Contraseña de bloqueo de pantalla. En Docker es el valor de --accessAuthCode.</string>
     <string name="setup_captcha">Captcha</string>
     <string name="setup_connect">Conectar</string>
-    <string name="setup_storage_notice">El código se cifra con una clave del Android Keystore y solo se borra cuando cierras sesión.</string>
+    <string name="setup_storage_notice">La contraseña se cifra con una clave del Android Keystore y solo se borra cuando cierras sesión.</string>
     <string name="setup_error_unreachable">Ningún kernel de SiYuan ha respondido en esa dirección.</string>
-    <string name="setup_error_wrong_code">El servidor ha rechazado ese código de acceso.</string>
+    <string name="setup_error_wrong_code">El servidor ha rechazado esa contraseña.</string>
     <string name="setup_error_captcha">Demasiados intentos fallidos: el servidor pide un captcha.</string>
-    <string name="setup_error_no_auth_code">Tu servidor no tiene código de acceso configurado, así que rechaza clientes remotos. Configúralo en SiYuan, en Ajustes → Acerca de.</string>
-    <string name="setup_error_session_rejected">El código guardado ya no vale. Vuelve a introducirlo.</string>
+    <string name="setup_error_no_auth_code">Tu servidor no tiene contraseña de bloqueo de pantalla, así que rechaza clientes remotos. Configúrala en SiYuan, en Ajustes → Acerca de → Contraseña de bloqueo de pantalla.</string>
+    <string name="setup_error_session_rejected">La contraseña guardada ya no vale. Vuelve a introducirla.</string>
 
     <!-- Errores y estado -->
     <string name="error_unreachable_title">Servidor inaccesible</string>
     <string name="error_unreachable_body">No ha respondido nada en:\n%1$s</string>
     <string name="error_page_title">No se ha podido cargar la página</string>
     <string name="error_session_title">Sesión rechazada</string>
-    <string name="error_session_body">El servidor sigue pidiendo autenticación. Lo más probable es que el código de acceso haya cambiado.</string>
+    <string name="error_session_body">El servidor sigue pidiendo autenticación. Lo más probable es que la contraseña de bloqueo de pantalla haya cambiado.</string>
 
     <!-- Acciones -->
     <string name="action_retry">Reintentar</string>
@@ -33,8 +33,8 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_unlock">Desbloquear</string>
     <string name="action_back">Atrás</string>
-    <string name="action_show_code">Mostrar código</string>
-    <string name="action_hide_code">Ocultar código</string>
+    <string name="action_show_code">Mostrar contraseña</string>
+    <string name="action_hide_code">Ocultar contraseña</string>
     <string name="action_quick_capture">Captura rápida</string>
     <string name="action_sync">Sincronizar ahora</string>
     <string name="action_reload">Recargar</string>
@@ -99,8 +99,8 @@
     <string name="settings_save_server">Guardar direcciones</string>
     <string name="settings_active_url">Conectado ahora a %1$s</string>
     <string name="settings_sign_out">Cerrar sesión</string>
-    <string name="settings_sign_out_confirm">Esto borra el código de acceso guardado y la sesión. Tendrás que volver a introducirlo.</string>
-    <string name="settings_session_explainer">La app mantiene la sesión indefinidamente: cuando la del servidor caduca, vuelve a entrar en segundo plano con el código guardado.</string>
+    <string name="settings_sign_out_confirm">Esto borra la contraseña guardada y la sesión. Tendrás que volver a introducirla.</string>
+    <string name="settings_session_explainer">La app mantiene la sesión indefinidamente: cuando la del servidor caduca, vuelve a entrar en segundo plano con la contraseña guardada.</string>
 
     <string name="settings_section_security">Seguridad</string>
     <string name="settings_app_lock">Bloqueo de la app</string>
@@ -142,4 +142,25 @@
     <string name="settings_webview_unknown">desconocida</string>
     <string name="settings_webview_outdated_hint">Este WebView es anterior a Chromium 108 y puede renderizar mal el editor.</string>
     <string name="settings_disclaimer">Cliente no oficial. Sin relación con el proyecto SiYuan.</string>
+    <!-- Actualizaciones -->
+    <string name="settings_section_updates">Actualizaciones</string>
+    <string name="settings_update_checks">Buscar versiones nuevas</string>
+    <string name="settings_update_checks_summary">Mira una vez al día las releases de este proyecto en GitHub y te avisa</string>
+    <string name="notification_channel_updates">Actualizaciones de la app</string>
+    <string name="notification_channel_updates_description">Te avisa cuando se publica una versión más nueva de esta app</string>
+    <string name="update_notification_title">Ya está disponible SiYuan Remote %1$s</string>
+    <string name="update_notification_text">Toca para ver qué cambia e instalarla</string>
+    <string name="update_available_title">Versión %1$s disponible</string>
+    <string name="update_installed_version">Tienes la %1$s</string>
+    <string name="update_up_to_date">Tienes la última versión</string>
+    <string name="update_check_now">Buscar ahora</string>
+    <string name="update_download">Descargar</string>
+    <string name="update_downloading">Descargando… %1$d%%</string>
+    <string name="update_download_failed">La descarga ha fallado. Reinténtalo o coge el APK de GitHub.</string>
+    <string name="update_install">Instalar</string>
+    <string name="update_install_failed">Ningún instalador puede abrir el archivo</string>
+    <string name="update_later">Más tarde</string>
+    <string name="update_skip">Saltar esta versión</string>
+    <string name="update_allow_unknown_sources">Permite a esta app instalar aplicaciones y vuelve a pulsar Instalar</string>
+    <string name="update_debug_signature_warning">Esta es una build de debug. Android se negará a instalar encima un APK de release porque las firmas no coinciden.</string>
 </resources>

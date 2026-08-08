@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.mateof.siyuanremote.BuildConfig
 import io.github.mateof.siyuanremote.network.WebViewCookieJar
+import io.github.mateof.siyuanremote.update.UpdateHttpClient
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,6 +24,21 @@ object AppModule {
         isLenient = true
         explicitNulls = false
     }
+
+    /**
+     * Talks to GitHub only. Kept separate from the kernel client on purpose:
+     * that one has a cookie jar shared with the WebView, and cookie jars are
+     * not host scoped, so reusing it would leak the SiYuan session cookie to
+     * github.com on every update check.
+     */
+    @Provides
+    @Singleton
+    @UpdateHttpClient
+    fun provideUpdateHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .followRedirects(true)
+        .build()
 
     @Provides
     @Singleton
