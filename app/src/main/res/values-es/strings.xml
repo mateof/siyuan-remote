@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SiYuan Remote</string>
+
+    <!-- Configuración inicial -->
+    <string name="setup_title">Conecta con tu servidor SiYuan</string>
+    <string name="setup_subtitle">Esta app habla con un kernel de SiYuan que ejecutas tú. No guarda las notas en el móvil.</string>
+    <string name="setup_primary_url">Dirección del servidor</string>
+    <string name="setup_primary_url_hint">Host y puerto de tu kernel. En red local vale http sin cifrar.</string>
+    <string name="setup_fallback_url">Dirección alternativa (opcional)</string>
+    <string name="setup_fallback_url_hint">Se prueba cuando la primera no responde: tu VPN o tu proxy inverso, por ejemplo.</string>
+    <string name="setup_auth_code">Código de acceso</string>
+    <string name="setup_auth_code_hint">En SiYuan: Ajustes → Acerca de → Código de autorización de acceso.</string>
+    <string name="setup_captcha">Captcha</string>
+    <string name="setup_connect">Conectar</string>
+    <string name="setup_storage_notice">El código se cifra con una clave del Android Keystore y solo se borra cuando cierras sesión.</string>
+    <string name="setup_error_unreachable">Ningún kernel de SiYuan ha respondido en esa dirección.</string>
+    <string name="setup_error_wrong_code">El servidor ha rechazado ese código de acceso.</string>
+    <string name="setup_error_captcha">Demasiados intentos fallidos: el servidor pide un captcha.</string>
+    <string name="setup_error_no_auth_code">Tu servidor no tiene código de acceso configurado, así que rechaza clientes remotos. Configúralo en SiYuan, en Ajustes → Acerca de.</string>
+    <string name="setup_error_session_rejected">El código guardado ya no vale. Vuelve a introducirlo.</string>
+
+    <!-- Errores y estado -->
+    <string name="error_unreachable_title">Servidor inaccesible</string>
+    <string name="error_unreachable_body">No ha respondido nada en:\n%1$s</string>
+    <string name="error_page_title">No se ha podido cargar la página</string>
+    <string name="error_session_title">Sesión rechazada</string>
+    <string name="error_session_body">El servidor sigue pidiendo autenticación. Lo más probable es que el código de acceso haya cambiado.</string>
+
+    <!-- Acciones -->
+    <string name="action_retry">Reintentar</string>
+    <string name="action_open_settings">Ajustes</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_unlock">Desbloquear</string>
+    <string name="action_back">Atrás</string>
+    <string name="action_show_code">Mostrar código</string>
+    <string name="action_hide_code">Ocultar código</string>
+    <string name="action_quick_capture">Captura rápida</string>
+    <string name="action_sync">Sincronizar ahora</string>
+    <string name="action_reload">Recargar</string>
+    <string name="action_app_menu">Menú de la app</string>
+
+    <!-- Avisos -->
+    <string name="toast_sync_requested">Sincronización solicitada</string>
+    <string name="toast_press_back_again">Pulsa atrás otra vez para salir</string>
+    <string name="toast_no_app_for_link">Ninguna app puede abrir ese enlace</string>
+    <string name="toast_download_started">Descargando %1$s</string>
+    <string name="toast_download_saved">%1$s guardado en Descargas</string>
+    <string name="toast_download_failed">La descarga ha fallado</string>
+    <string name="file_chooser_title">Elige un archivo</string>
+    <string name="warning_webview_missing">Falta Android System WebView o está desactivado. SiYuan no puede funcionar sin él.</string>
+    <string name="warning_webview_outdated">Tu Android System WebView (%1$s) es antiguo. Actualízalo para que el editor funcione bien.</string>
+
+    <!-- Bloqueo -->
+    <string name="lock_title">Desbloquear SiYuan Remote</string>
+    <string name="lock_subtitle">La sesión sigue abierta en este dispositivo.</string>
+    <string name="lock_body">Autentícate para abrir tu base de conocimiento.</string>
+
+    <!-- Captura rápida -->
+    <string name="capture_title">Captura rápida</string>
+    <string name="capture_hint">¿Qué quieres recordar?</string>
+    <string name="capture_send">Enviar</string>
+    <string name="capture_sent">Añadido a tu nota diaria</string>
+    <string name="capture_dictate">Dictar</string>
+    <string name="capture_dictate_prompt">Di tu nota</string>
+    <string name="capture_dictate_unavailable">Este dispositivo no tiene reconocimiento de voz</string>
+    <string name="capture_as_task">Como tarea</string>
+    <string name="capture_open_in_app">Abrir en el editor</string>
+    <string name="capture_attachments">Se subirán %1$d adjunto(s)</string>
+    <string name="capture_target_default">Va a la nota diaria de tu primer bloc</string>
+    <string name="capture_target_named">Va a la nota diaria de %1$s</string>
+    <string name="capture_error_empty">Escribe algo primero</string>
+    <string name="capture_error_generic">No se ha podido guardar la nota</string>
+    <string name="capture_error_no_notebook">No hay ningún bloc abierto en el servidor</string>
+    <string name="capture_error_not_configured">Configura antes el servidor</string>
+    <string name="capture_error_unreachable">El servidor está inaccesible</string>
+    <string name="capture_error_auth">Vuelve a iniciar sesión desde la app</string>
+
+    <!-- Notificación -->
+    <string name="notification_channel_capture">Captura rápida</string>
+    <string name="notification_channel_capture_description">Notificación silenciosa con un campo para capturar notas</string>
+    <string name="notification_capture_title">Captura rápida de SiYuan</string>
+    <string name="notification_capture_text">Escribe directamente en la nota diaria de hoy</string>
+    <string name="notification_capture_action">Capturar</string>
+    <string name="notification_capture_hint">Nota…</string>
+
+    <!-- Accesos directos y widget -->
+    <string name="shortcut_capture_short">Capturar</string>
+    <string name="shortcut_capture_long">Captura rápida</string>
+    <string name="shortcut_daily_short">Nota diaria</string>
+    <string name="shortcut_daily_long">Abrir la nota diaria de hoy</string>
+    <string name="widget_description">Captura rápida en SiYuan</string>
+    <string name="widget_capture_label">Capturar</string>
+    <string name="widget_open_label">Abrir SiYuan</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_section_server">Servidor</string>
+    <string name="settings_save_server">Guardar direcciones</string>
+    <string name="settings_active_url">Conectado ahora a %1$s</string>
+    <string name="settings_sign_out">Cerrar sesión</string>
+    <string name="settings_sign_out_confirm">Esto borra el código de acceso guardado y la sesión. Tendrás que volver a introducirlo.</string>
+    <string name="settings_session_explainer">La app mantiene la sesión indefinidamente: cuando la del servidor caduca, vuelve a entrar en segundo plano con el código guardado.</string>
+
+    <string name="settings_section_security">Seguridad</string>
+    <string name="settings_app_lock">Bloqueo de la app</string>
+    <string name="settings_app_lock_summary">Pide biometría o el PIN del dispositivo antes de mostrar tus notas</string>
+    <string name="settings_app_lock_unavailable">Este dispositivo no tiene biometría ni credencial configurada</string>
+
+    <string name="settings_section_capture">Captura</string>
+    <string name="settings_capture_notebook">Bloc de destino</string>
+    <string name="settings_capture_notebook_first">Primer bloc abierto</string>
+    <string name="settings_capture_notebook_summary">Dónde añade sus bloques la captura rápida</string>
+    <string name="settings_capture_as_task">Capturar como tarea</string>
+    <string name="settings_capture_as_task_summary">Antepone una casilla de tarea sin marcar al texto capturado</string>
+    <string name="settings_capture_timestamp">Añadir la hora</string>
+    <string name="settings_capture_timestamp_summary">Añade al bloque la hora en la que se capturó</string>
+    <string name="settings_capture_notification">Notificación de captura</string>
+    <string name="settings_capture_notification_summary">Mantiene una notificación silenciosa con campo de respuesta</string>
+    <string name="settings_loading">Cargando…</string>
+
+    <string name="settings_section_display">Pantalla</string>
+    <string name="settings_quick_button">Botón flotante de la app</string>
+    <string name="settings_quick_button_summary">Da acceso a ajustes, recarga, captura y sincronización desde el editor</string>
+    <string name="settings_force_desktop">Forzar interfaz de escritorio</string>
+    <string name="settings_force_desktop_summary">Sirve la interfaz de escritorio en vez de la móvil, útil en tablets</string>
+    <string name="settings_keep_screen_on">Mantener la pantalla encendida</string>
+    <string name="settings_keep_screen_on_summary">Evita que la pantalla se apague mientras la app está abierta</string>
+    <string name="settings_text_zoom">Tamaño del texto: %1$d%%</string>
+
+    <string name="settings_section_advanced">Avanzado</string>
+    <string name="settings_external_links">Abrir enlaces externos en el navegador</string>
+    <string name="settings_external_links_summary">Los enlaces a otros sitios se abren en una pestaña del navegador, no dentro de la app</string>
+    <string name="settings_sync_on_resume">Sincronizar al abrir la app</string>
+    <string name="settings_sync_on_resume_summary">Pide al kernel que ejecute su sincronización cada vez que la app pasa a primer plano</string>
+    <string name="settings_mixed_content">Permitir contenido mixto</string>
+    <string name="settings_mixed_content_summary">Actívalo solo si tu servidor HTTPS carga recursos por http sin cifrar</string>
+
+    <string name="settings_section_about">Acerca de</string>
+    <string name="settings_app_version">Versión de la app %1$s</string>
+    <string name="settings_webview_version">Android System WebView %1$s</string>
+    <string name="settings_webview_unknown">desconocida</string>
+    <string name="settings_webview_outdated_hint">Este WebView es anterior a Chromium 108 y puede renderizar mal el editor.</string>
+    <string name="settings_disclaimer">Cliente no oficial. Sin relación con el proyecto SiYuan.</string>
+</resources>

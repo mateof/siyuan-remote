@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: SiYuan itself
+    url: https://github.com/siyuan-note/siyuan/issues
+    about: Bugs in the editor, the kernel or sync belong upstream. This app is unofficial.

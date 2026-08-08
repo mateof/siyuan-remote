@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="siyuan_blue">#FF3575F3</color>
+    <color name="launcher_background">#FF0E1A2B</color>
+    <color name="window_background_light">#FFFDFBFF</color>
+    <color name="window_background_dark">#FF1A1B1F</color>
+</resources>

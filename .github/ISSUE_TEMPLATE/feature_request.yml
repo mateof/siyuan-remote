@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest something the app should do
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This app is intentionally thin: it wraps the SiYuan frontend rather than reimplementing it.
+        Requests to rebuild parts of the editor natively will be declined. See docs/FEATURES.md.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: The situation, not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like the app to do
+    validations:
+      required: true

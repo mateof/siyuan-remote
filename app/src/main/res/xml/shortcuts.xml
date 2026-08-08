@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="quick_capture"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_capture"
+        android:shortcutShortLabel="@string/shortcut_capture_short"
+        android:shortcutLongLabel="@string/shortcut_capture_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.github.mateof.siyuanremote"
+            android:targetClass="io.github.mateof.siyuanremote.capture.QuickCaptureActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="daily_note"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_daily"
+        android:shortcutShortLabel="@string/shortcut_daily_short"
+        android:shortcutLongLabel="@string/shortcut_daily_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="io.github.mateof.siyuanremote"
+            android:targetClass="io.github.mateof.siyuanremote.MainActivity">
+            <extra
+                android:name="io.github.mateof.siyuanremote.extra.OPEN_DAILY_NOTE"
+                android:value="true" />
+        </intent>
+    </shortcut>
+</shortcuts>

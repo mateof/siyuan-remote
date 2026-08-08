@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <!-- The encrypted access code is bound to a Keystore key that never leaves
+         the device, so backing it up would only produce undecryptable bytes. -->
+    <cloud-backup>
+        <exclude domain="sharedpref" path="siyuan_remote_secrets.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="siyuan_remote_secrets.xml" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+    <!--
+      Both relaxations below are deliberate and specific to self hosting.
+
+      cleartextTrafficPermitted: a kernel on your own LAN is normally reached
+      over plain http on port 6806. Refusing that would make the common case
+      impossible. docs/SETUP.md states what it costs.
+
+      user certificates: people who front the kernel with their own CA need the
+      device trust store to include it. The alternative, an "ignore certificate
+      errors" prompt, trains users to accept anything and is strictly worse.
+    -->
+    <base-config
+        cleartextTrafficPermitted="true"
+        tools:ignore="InsecureBaseConfiguration">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" tools:ignore="AcceptsUserCertificates" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

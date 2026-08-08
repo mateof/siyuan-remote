@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Three linked nodes: a knowledge graph reduced to its smallest form. -->
+    <path
+        android:pathData="M54,42L36,70M54,42L72,70M36,70L72,70"
+        android:strokeColor="#FF9CBEFF"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M54,32c5.52,0 10,4.48 10,10s-4.48,10 -10,10s-10,-4.48 -10,-10s4.48,-10 10,-10z" />
+    <path
+        android:fillColor="#FF9CBEFF"
+        android:pathData="M36,62c4.42,0 8,3.58 8,8s-3.58,8 -8,8s-8,-3.58 -8,-8s3.58,-8 8,-8z" />
+    <path
+        android:fillColor="#FF9CBEFF"
+        android:pathData="M72,62c4.42,0 8,3.58 8,8s-3.58,8 -8,8s-8,-3.58 -8,-8s3.58,-8 8,-8z" />
+</vector>
