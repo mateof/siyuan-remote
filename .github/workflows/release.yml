@@ -93,11 +93,15 @@ jobs:
         id: notes
         run: |
           VERSION="${{ steps.version.outputs.version }}"
+          # Stops at the next version heading, and also at the link reference
+          # block that closes the file, which the last section would otherwise
+          # swallow because nothing follows it.
           awk -v version="$VERSION" '
             $0 ~ "^## \\[" version "\\]" { capture = 1; next }
             capture && /^## \[/ { exit }
+            capture && /^\[[^]]+\]:[[:space:]]*http/ { exit }
             capture { print }
-          ' CHANGELOG.md > "$RUNNER_TEMP/notes.md"
+          ' CHANGELOG.md | sed -e :a -e '/^\n*$/{$d;N;};/\n$/ba' > "$RUNNER_TEMP/notes.md"
           if [ ! -s "$RUNNER_TEMP/notes.md" ]; then
             echo "No changelog entry for $VERSION." > "$RUNNER_TEMP/notes.md"
           fi
