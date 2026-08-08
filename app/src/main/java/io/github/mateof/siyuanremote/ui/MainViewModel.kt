@@ -1,5 +1,6 @@
 package io.github.mateof.siyuanremote.ui
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,8 +41,21 @@ class MainViewModel @Inject constructor(
     private val _events = Channel<MainEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
-    /** Survives configuration changes so rotating the device does not re-prompt. */
-    var unlockedAt: Long = 0L
+    /**
+     * When the app was last sent to the background, as elapsed realtime.
+     *
+     * The lock grace period is measured from here and not from the moment of
+     * unlocking: otherwise a minute of normal use is enough to make every trip
+     * to the browser come back to a biometric prompt.
+     */
+    var backgroundedAt: Long = 0L
+
+    /**
+     * The WebView's navigation history, kept across activity recreation.
+     * Held here rather than in saved instance state because it can exceed the
+     * Binder transaction limit on a long browsing session.
+     */
+    val webViewState: Bundle = Bundle()
 
     init {
         connect()
@@ -113,7 +127,8 @@ class MainViewModel @Inject constructor(
     fun signOut() {
         viewModelScope.launch {
             sessionManager.signOut()
-            unlockedAt = 0L
+            backgroundedAt = 0L
+            webViewState.clear()
             _uiState.value = MainUiState.NeedsSetup(AppSettings())
         }
     }
