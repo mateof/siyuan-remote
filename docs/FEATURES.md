@@ -69,7 +69,7 @@ The kernel picks the mobile or desktop UI from the User-Agent, with a `siyuan-de
 
 | Setting | Default | What it does |
 |---|---|---|
-| Floating app button | On | Access to settings, reload, capture and sync from inside the editor. It fades to 25% opacity after 3 seconds |
+| Floating app button | On | Access to settings, reload, capture and sync from inside the editor. Fades to 25% opacity after 3 seconds, and **drag it anywhere** if it covers something you need. It remembers where you left it |
 | Keep the screen on | Off | Holds `FLAG_KEEP_SCREEN_ON` while the app is in the foreground |
 | Text size | 100% | WebView text zoom, 70% to 150% |
 | Open external links in the browser | On | Links to other hosts open in a Custom Tab instead of hijacking the editor |

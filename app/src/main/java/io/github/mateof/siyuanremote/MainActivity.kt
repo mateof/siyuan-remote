@@ -41,8 +41,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -256,12 +258,17 @@ class MainActivity : FragmentActivity() {
 
         WebViewCompatibilityWarning()
 
+        // Measured here so the draggable button can clamp itself without
+        // introducing a screen sized layer of its own over the WebView.
+        var containerSize by remember { mutableStateOf(IntSize.Zero) }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .imePadding(),
+                .imePadding()
+                .onSizeChanged { containerSize = it },
         ) {
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
@@ -333,9 +340,11 @@ class MainActivity : FragmentActivity() {
 
             if (settings.showQuickButton) {
                 QuickActionButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(12.dp),
+                    containerSize = containerSize,
+                    positionX = settings.quickButtonX,
+                    positionY = settings.quickButtonY,
+                    onPositionChanged = viewModel::setQuickButtonPosition,
+                    modifier = Modifier.align(Alignment.TopStart),
                     onSettings = { startActivity(Intent(this@MainActivity, SettingsActivity::class.java)) },
                     onQuickCapture = { startActivity(Intent(this@MainActivity, QuickCaptureActivity::class.java)) },
                     onReload = { webView?.reload() },

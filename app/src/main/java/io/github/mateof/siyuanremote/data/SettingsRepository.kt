@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -37,6 +38,11 @@ class SettingsRepository @Inject constructor(
     suspend fun setAppLockEnabled(enabled: Boolean) = edit { it[Keys.APP_LOCK] = enabled }
     suspend fun setKeepScreenOn(enabled: Boolean) = edit { it[Keys.KEEP_SCREEN_ON] = enabled }
     suspend fun setShowQuickButton(enabled: Boolean) = edit { it[Keys.QUICK_BUTTON] = enabled }
+
+    suspend fun setQuickButtonPosition(x: Float, y: Float) = edit {
+        it[Keys.QUICK_BUTTON_X] = x.coerceIn(0f, 1f)
+        it[Keys.QUICK_BUTTON_Y] = y.coerceIn(0f, 1f)
+    }
     suspend fun setOpenExternalLinksInBrowser(enabled: Boolean) = edit { it[Keys.EXTERNAL_LINKS] = enabled }
     suspend fun setForceDesktopUi(enabled: Boolean) = edit { it[Keys.FORCE_DESKTOP] = enabled }
     suspend fun setAllowMixedContent(enabled: Boolean) = edit { it[Keys.MIXED_CONTENT] = enabled }
@@ -73,6 +79,8 @@ class SettingsRepository @Inject constructor(
         appLockEnabled = this[Keys.APP_LOCK] ?: true,
         keepScreenOn = this[Keys.KEEP_SCREEN_ON] ?: false,
         showQuickButton = this[Keys.QUICK_BUTTON] ?: true,
+        quickButtonX = this[Keys.QUICK_BUTTON_X] ?: 1f,
+        quickButtonY = this[Keys.QUICK_BUTTON_Y] ?: 1f,
         openExternalLinksInBrowser = this[Keys.EXTERNAL_LINKS] ?: true,
         forceDesktopUi = this[Keys.FORCE_DESKTOP] ?: false,
         allowMixedContent = this[Keys.MIXED_CONTENT] ?: false,
@@ -95,6 +103,8 @@ class SettingsRepository @Inject constructor(
         val APP_LOCK = booleanPreferencesKey("app_lock")
         val KEEP_SCREEN_ON = booleanPreferencesKey("keep_screen_on")
         val QUICK_BUTTON = booleanPreferencesKey("quick_button")
+        val QUICK_BUTTON_X = floatPreferencesKey("quick_button_x")
+        val QUICK_BUTTON_Y = floatPreferencesKey("quick_button_y")
         val EXTERNAL_LINKS = booleanPreferencesKey("external_links")
         val FORCE_DESKTOP = booleanPreferencesKey("force_desktop")
         val MIXED_CONTENT = booleanPreferencesKey("mixed_content")
