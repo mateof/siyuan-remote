@@ -5,6 +5,10 @@ on:
   push:
     branches-ignore:
       - main
+      # Every branch that arrives with a pull request is already covered by the
+      # pull_request trigger above. Without this, each one runs CI twice, which
+      # is most of the noise a batch of dependency updates produces.
+      - 'dependabot/**'
   workflow_dispatch:
 
 concurrency:
