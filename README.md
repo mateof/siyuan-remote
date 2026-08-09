@@ -6,7 +6,7 @@ The official SiYuan Android app runs its own kernel on the phone and syncs throu
 
 [![CI](https://github.com/mateof/siyuan-remote/actions/workflows/ci.yml/badge.svg)](https://github.com/mateof/siyuan-remote/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/mateof/siyuan-remote?include_prereleases&sort=semver)](https://github.com/mateof/siyuan-remote/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![minSdk](https://img.shields.io/badge/minSdk-26-brightgreen)](app/build.gradle.kts)
 
 > **Not affiliated with the SiYuan project.** This is an independent client. Please do not open SiYuan issues about it.
@@ -106,4 +106,15 @@ Release signing is optional locally: without a keystore, `assembleRelease` produ
 
 ## License
 
-[MIT](LICENSE). SiYuan itself is AGPL-3.0 and is not bundled, modified or redistributed here; this app only connects to it over HTTP.
+This program is free software: you can redistribute it and/or modify it under
+the terms of the **GNU General Public License** as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version. See [LICENSE](LICENSE).
+
+It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY,
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.
+
+SiYuan itself is AGPL-3.0 and is not bundled, modified or redistributed here;
+this app only connects to it over HTTP. Every dependency is Apache-2.0, which is
+compatible with GPL-3.0.

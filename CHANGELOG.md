@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- Relicensed from MIT to **GPL-3.0-or-later**. The full licence text is in
+  LICENSE and every source file carries an SPDX notice. All dependencies are
+  Apache-2.0, which is compatible with GPL-3.0.
+
 ## [0.2.2]
 
 ### Changed

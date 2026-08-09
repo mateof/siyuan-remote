@@ -1,3 +1,6 @@
+// Copyright (C) 2026 mateof
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 package io.github.mateof.siyuanremote.update
 
 import javax.inject.Qualifier
