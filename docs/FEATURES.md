@@ -51,6 +51,35 @@ The app detects `blob:` downloads, reads the blob back through a small injected 
 
 The script is namespaced under `SiyuanRemoteBridge` and touches no SiYuan global, so it cannot interfere with the frontend or be mistaken for the official app's `JSAndroid` bridge.
 
+## Pasting with formatting
+
+**On by default.** A WebView cannot grant the `clipboard-read` permission that
+`navigator.clipboard.read()` needs: `WebChromeClient.onPermissionRequest` only
+covers audio, video, MIDI and protected media, and there is no prompt. So the
+call rejects and SiYuan says "allow clipboard access in the browser address
+bar", which means nothing inside an app. The practical effect is that pasting
+through SiYuan's own paste keeps plain text only, losing every link, heading and
+bold in whatever you copied.
+
+The app supplies the API instead of asking for the permission. A small script,
+injected before the page's own scripts, replaces `read` and `readText` with
+versions backed by Android's clipboard, where `ClipData.Item.getHtmlText()` is
+the formatted copy the other app left behind. SiYuan's paste code is untouched;
+it simply gets an API that works. `write` and `writeText` are left alone, since
+writing needs a user gesture rather than a permission and already worked.
+
+Two things are worth knowing:
+
+- `addJavascriptInterface` is not scoped to an origin, so the bridge refuses to
+  answer unless the page it is serving belongs to your configured server. The
+  WebView only loads that server anyway, since outbound links leave for a custom
+  tab, but a redirect could land elsewhere.
+- Turn it off in **Settings → Advanced** if you would rather no bridge existed.
+  Pasting then behaves as it does in a mobile browser.
+
+Pasting with the system's own long press → Paste does not go through this: that
+path uses the `paste` event, which carries `text/html` without any permission.
+
 ## Dual address with automatic fallback
 
 Set a primary address and a fallback. On each cold start the app probes them in order with a 3 second timeout using the unauthenticated `/api/system/version`, uses the first that answers, and remembers it so the next start goes straight there. Typical pairing: LAN address at home, Tailscale or reverse proxy address outside.

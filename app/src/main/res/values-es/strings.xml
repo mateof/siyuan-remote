@@ -163,4 +163,6 @@
     <string name="update_skip">Saltar esta versión</string>
     <string name="update_allow_unknown_sources">Permite a esta app instalar aplicaciones y vuelve a pulsar Instalar</string>
     <string name="update_debug_signature_warning">Esta es una build de debug. Android se negará a instalar encima un APK de release porque las firmas no coinciden.</string>
+    <string name="settings_native_clipboard">Pegar con formato</string>
+    <string name="settings_native_clipboard_summary">Lee el portapapeles del sistema directamente. Un WebView no puede conceder el permiso que necesita la API web del portapapeles, así que sin esto al pegar solo se conserva el texto plano</string>
 </resources>

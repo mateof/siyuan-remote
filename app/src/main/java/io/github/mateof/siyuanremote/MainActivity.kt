@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.provider.MediaStore
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -52,6 +53,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -71,6 +74,7 @@ import io.github.mateof.siyuanremote.ui.theme.SiyuanRemoteTheme
 import io.github.mateof.siyuanremote.update.UpdateCheckWorker
 import io.github.mateof.siyuanremote.update.UpdateDialog
 import io.github.mateof.siyuanremote.update.UpdateViewModel
+import io.github.mateof.siyuanremote.ui.web.ClipboardBridge
 import io.github.mateof.siyuanremote.ui.web.Downloader
 import io.github.mateof.siyuanremote.ui.web.QuickActionButton
 import io.github.mateof.siyuanremote.ui.web.SiyuanWebChromeClient
@@ -96,6 +100,8 @@ class MainActivity : FragmentActivity() {
     private var pendingMediaPermission: PermissionRequest? = null
     private var pendingBlockId: String? = null
     private var lastBackPressAt = 0L
+    private var clipboardBridge: ClipboardBridge? = null
+    private var pendingClipboardShim = false
 
     private val downloader by lazy { Downloader(applicationContext) }
 
@@ -288,6 +294,12 @@ class MainActivity : FragmentActivity() {
                             onSessionExpired = viewModel::onSessionExpired,
                             onExternalUrl = ::handleExternalUrl,
                             onStateChanged = { pageState = it },
+                            onPageUrlChanged = { url ->
+                                clipboardBridge?.onPageUrlChanged(url)
+                                if (pendingClipboardShim) {
+                                    webView?.evaluateJavascript(ClipboardBridge.SHIM, null)
+                                }
+                            },
                         )
                         webChromeClient = SiyuanWebChromeClient(
                             onFileChooser = ::showFileChooser,
@@ -298,6 +310,9 @@ class MainActivity : FragmentActivity() {
                             startDownload(url, userAgent, contentDisposition, mimeType)
                         }
                         addJavascriptInterface(BlobDownloadBridge(), Downloader.BRIDGE_NAME)
+                        if (settings.nativeClipboard) {
+                            installClipboardBridge(this, state.baseUrl)
+                        }
                         // Restoring beats reloading: it brings back the whole
                         // back stack, not just the last address. Guarded by an
                         // origin check so a history saved against a previous
@@ -378,6 +393,29 @@ class MainActivity : FragmentActivity() {
      * "leave the app", which keeps the hardware button behaving like it does in
      * the official client.
      */
+    /**
+     * The shim runs before the page's own scripts, so SiYuan sees a working
+     * clipboard from its first line rather than after a race.
+     */
+    private fun installClipboardBridge(webView: WebView, baseUrl: String) {
+        val bridge = ClipboardBridge(applicationContext) { baseUrl }
+        clipboardBridge = bridge
+        webView.addJavascriptInterface(bridge, ClipboardBridge.NAME)
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            runCatching {
+                WebViewCompat.addDocumentStartJavaScript(webView, ClipboardBridge.SHIM, setOf(baseUrl))
+            }.onFailure {
+                Log.w(TAG, "Could not register the clipboard shim at document start", it)
+                pendingClipboardShim = true
+            }
+        } else {
+            // Older WebViews get it once the document is ready instead, which is
+            // still before anyone can press paste.
+            pendingClipboardShim = true
+        }
+    }
+
     private fun onWebBackPressed() {
         val view = webView
         if (view == null) {
@@ -683,6 +721,7 @@ class MainActivity : FragmentActivity() {
     }
 
     companion object {
+        const val TAG = "MainActivity"
         const val EXTRA_BLOCK_ID = "io.github.mateof.siyuanremote.extra.BLOCK_ID"
         const val EXTRA_OPEN_DAILY_NOTE = "io.github.mateof.siyuanremote.extra.OPEN_DAILY_NOTE"
 

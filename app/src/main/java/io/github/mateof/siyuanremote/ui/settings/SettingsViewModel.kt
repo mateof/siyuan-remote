@@ -55,6 +55,7 @@ class SettingsViewModel @Inject constructor(
     fun setQuickButton(enabled: Boolean) = launchEdit { settingsRepository.setShowQuickButton(enabled) }
     fun setForceDesktopUi(enabled: Boolean) = launchEdit { settingsRepository.setForceDesktopUi(enabled) }
     fun setAllowMixedContent(enabled: Boolean) = launchEdit { settingsRepository.setAllowMixedContent(enabled) }
+    fun setNativeClipboard(enabled: Boolean) = launchEdit { settingsRepository.setNativeClipboard(enabled) }
     fun setOpenExternalLinks(enabled: Boolean) = launchEdit {
         settingsRepository.setOpenExternalLinksInBrowser(enabled)
     }

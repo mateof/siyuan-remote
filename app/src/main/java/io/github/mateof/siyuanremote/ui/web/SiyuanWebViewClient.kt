@@ -26,6 +26,8 @@ class SiyuanWebViewClient(
     /** Returns true when the app took the URL over and the WebView must not load it. */
     private val onExternalUrl: (Uri) -> Boolean,
     private val onStateChanged: (WebPageState) -> Unit,
+    /** Lets the clipboard bridge know which page it is serving. */
+    private val onPageUrlChanged: (String) -> Unit = {},
 ) : WebViewClient() {
 
     private var lastAuthAttemptAt = 0L
@@ -45,13 +47,19 @@ class SiyuanWebViewClient(
     }
 
     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+        onPageUrlChanged(url)
         onStateChanged(WebPageState.Loading)
         // A server-side 302 to /check-auth can reach the main frame without
         // passing through shouldOverrideUrlLoading on some WebView versions.
         handleCheckAuth(Uri.parse(url))
     }
 
+    override fun doUpdateVisitedHistory(view: WebView, url: String, isReload: Boolean) {
+        onPageUrlChanged(url)
+    }
+
     override fun onPageFinished(view: WebView, url: String) {
+        onPageUrlChanged(url)
         if (!Uri.parse(url).path.orEmpty().startsWith(CHECK_AUTH_PATH)) {
             consecutiveAuthAttempts = 0
             onStateChanged(WebPageState.Ready)

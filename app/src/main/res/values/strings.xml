@@ -163,4 +163,6 @@
     <string name="update_skip">Skip this version</string>
     <string name="update_allow_unknown_sources">Allow this app to install apps, then press Install again</string>
     <string name="update_debug_signature_warning">This is a debug build. Android will refuse to install a release APK over it because the signatures differ.</string>
+    <string name="settings_native_clipboard">Paste with formatting</string>
+    <string name="settings_native_clipboard_summary">Reads the system clipboard directly. A WebView cannot grant the permission the web clipboard API needs, so without this, pasting keeps only plain text</string>
 </resources>

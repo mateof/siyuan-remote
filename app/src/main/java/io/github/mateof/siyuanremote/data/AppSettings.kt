@@ -31,6 +31,11 @@ data class AppSettings(
     val openExternalLinksInBrowser: Boolean = true,
     val forceDesktopUi: Boolean = false,
     val allowMixedContent: Boolean = false,
+    /**
+     * Supply `navigator.clipboard.read` from the Android clipboard, since a
+     * WebView cannot grant the permission the real one needs.
+     */
+    val nativeClipboard: Boolean = true,
     val textZoom: Int = 100,
 
     val captureNotificationEnabled: Boolean = false,

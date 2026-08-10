@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0]
+
+### Fixed
+- Pasting with formatting. SiYuan's own paste calls
+  `navigator.clipboard.read()`, which needs the `clipboard-read` permission, and
+  a WebView has no way to grant it: there is no prompt and no API. The call
+  rejected and SiYuan told you to allow clipboard access in the browser address
+  bar, advice with no meaning inside an app, so pasting kept plain text only.
+
+  The app now supplies that API instead of asking for the permission, backed by
+  Android's clipboard where the HTML copy actually lives. SiYuan's code is
+  untouched. Turn it off in Settings → Advanced.
+
 ### Changed
 - Relicensed from MIT to **GPL-3.0-or-later**. The full licence text is in
   LICENSE and every source file carries an SPDX notice. All dependencies are
@@ -73,7 +86,8 @@ First release.
 - Android System WebView version check with a warning below Chromium 108.
 - English and Spanish translations.
 
-[Unreleased]: https://github.com/mateof/siyuan-remote/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/mateof/siyuan-remote/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/mateof/siyuan-remote/releases/tag/v0.3.0
 [0.2.2]: https://github.com/mateof/siyuan-remote/releases/tag/v0.2.2
 [0.2.1]: https://github.com/mateof/siyuan-remote/releases/tag/v0.2.1
 [0.2.0]: https://github.com/mateof/siyuan-remote/releases/tag/v0.2.0

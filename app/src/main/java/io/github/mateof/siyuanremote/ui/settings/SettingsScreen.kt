@@ -190,6 +190,14 @@ fun SettingsScreen(
             }
             item {
                 SwitchRow(
+                    title = stringResource(R.string.settings_native_clipboard),
+                    subtitle = stringResource(R.string.settings_native_clipboard_summary),
+                    checked = settings.nativeClipboard,
+                    onCheckedChange = callbacks.onNativeClipboardChanged,
+                )
+            }
+            item {
+                SwitchRow(
                     title = stringResource(R.string.settings_mixed_content),
                     subtitle = stringResource(R.string.settings_mixed_content_summary),
                     checked = settings.allowMixedContent,
@@ -424,6 +432,7 @@ data class SettingsCallbacks(
     val onExternalLinksChanged: (Boolean) -> Unit,
     val onSyncOnResumeChanged: (Boolean) -> Unit,
     val onMixedContentChanged: (Boolean) -> Unit,
+    val onNativeClipboardChanged: (Boolean) -> Unit,
     val onCaptureAsTaskChanged: (Boolean) -> Unit,
     val onCaptureTimestampChanged: (Boolean) -> Unit,
     val onCaptureNotificationChanged: (Boolean) -> Unit,

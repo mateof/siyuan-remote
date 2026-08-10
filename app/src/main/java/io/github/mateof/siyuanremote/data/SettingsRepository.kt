@@ -49,6 +49,7 @@ class SettingsRepository @Inject constructor(
     suspend fun setOpenExternalLinksInBrowser(enabled: Boolean) = edit { it[Keys.EXTERNAL_LINKS] = enabled }
     suspend fun setForceDesktopUi(enabled: Boolean) = edit { it[Keys.FORCE_DESKTOP] = enabled }
     suspend fun setAllowMixedContent(enabled: Boolean) = edit { it[Keys.MIXED_CONTENT] = enabled }
+    suspend fun setNativeClipboard(enabled: Boolean) = edit { it[Keys.NATIVE_CLIPBOARD] = enabled }
     suspend fun setTextZoom(zoom: Int) = edit { it[Keys.TEXT_ZOOM] = zoom.coerceIn(50, 200) }
     suspend fun setCaptureNotificationEnabled(enabled: Boolean) = edit { it[Keys.CAPTURE_NOTIFICATION] = enabled }
     suspend fun setSyncOnResume(enabled: Boolean) = edit { it[Keys.SYNC_ON_RESUME] = enabled }
@@ -87,6 +88,7 @@ class SettingsRepository @Inject constructor(
         openExternalLinksInBrowser = this[Keys.EXTERNAL_LINKS] ?: true,
         forceDesktopUi = this[Keys.FORCE_DESKTOP] ?: false,
         allowMixedContent = this[Keys.MIXED_CONTENT] ?: false,
+        nativeClipboard = this[Keys.NATIVE_CLIPBOARD] ?: true,
         textZoom = this[Keys.TEXT_ZOOM] ?: 100,
         captureNotificationEnabled = this[Keys.CAPTURE_NOTIFICATION] ?: false,
         syncOnResume = this[Keys.SYNC_ON_RESUME] ?: false,
@@ -111,6 +113,7 @@ class SettingsRepository @Inject constructor(
         val EXTERNAL_LINKS = booleanPreferencesKey("external_links")
         val FORCE_DESKTOP = booleanPreferencesKey("force_desktop")
         val MIXED_CONTENT = booleanPreferencesKey("mixed_content")
+        val NATIVE_CLIPBOARD = booleanPreferencesKey("native_clipboard")
         val TEXT_ZOOM = intPreferencesKey("text_zoom")
         val CAPTURE_NOTIFICATION = booleanPreferencesKey("capture_notification")
         val SYNC_ON_RESUME = booleanPreferencesKey("sync_on_resume")

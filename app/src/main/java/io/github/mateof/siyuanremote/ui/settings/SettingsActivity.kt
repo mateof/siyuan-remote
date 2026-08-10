@@ -113,6 +113,7 @@ class SettingsActivity : ComponentActivity() {
                                 onExternalLinksChanged = viewModel::setOpenExternalLinks,
                                 onSyncOnResumeChanged = viewModel::setSyncOnResume,
                                 onMixedContentChanged = viewModel::setAllowMixedContent,
+                                onNativeClipboardChanged = viewModel::setNativeClipboard,
                                 onCaptureAsTaskChanged = viewModel::setCaptureAsTask,
                                 onCaptureTimestampChanged = viewModel::setCaptureTimestamp,
                                 onCaptureNotificationChanged = ::onCaptureNotificationChanged,
