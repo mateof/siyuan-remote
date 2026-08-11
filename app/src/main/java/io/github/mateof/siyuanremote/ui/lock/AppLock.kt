@@ -4,6 +4,7 @@
 package io.github.mateof.siyuanremote.ui.lock
 
 import android.content.Context
+import android.util.Log
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
@@ -33,6 +34,17 @@ object AppLock {
 
     fun isAvailable(context: Context): Boolean = availableAuthenticators(context) != null
 
+    private const val TAG = "AppLock"
+
+    /** Errors that mean no credential exists to check against, ever. */
+    private val UNAUTHENTICATABLE = setOf(
+        BiometricPrompt.ERROR_HW_NOT_PRESENT,
+        BiometricPrompt.ERROR_HW_UNAVAILABLE,
+        BiometricPrompt.ERROR_NO_BIOMETRICS,
+        BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL,
+        BiometricPrompt.ERROR_SECURITY_UPDATE_REQUIRED,
+    )
+
     fun prompt(
         activity: FragmentActivity,
         title: String,
@@ -55,7 +67,16 @@ object AppLock {
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    onDismissed()
+                    // Some errors mean the device cannot authenticate at all:
+                    // no hardware, nothing enrolled, no device credential. The
+                    // lock has nothing to check against, and refusing entry
+                    // would make the app permanently unusable on that phone.
+                    if (errorCode in UNAUTHENTICATABLE) {
+                        Log.i(TAG, "Cannot authenticate on this device ($errorCode), unlocking")
+                        onSuccess()
+                    } else {
+                        onDismissed()
+                    }
                 }
             },
         )

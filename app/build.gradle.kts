@@ -11,8 +11,8 @@ plugins {
 
 // Single source of truth for the app version. The release workflow greps these
 // two lines to build the git tag, so keep the literal format unchanged.
-val appVersionName = "0.4.0"
-val appVersionCode = 6
+val appVersionName = "0.4.1"
+val appVersionCode = 7
 
 /**
  * Release signing is optional so that anyone can clone and run `assembleRelease`

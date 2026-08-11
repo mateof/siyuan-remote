@@ -762,13 +762,21 @@ class MainActivity : FragmentActivity() {
 }
 
 /**
- * Consumes every pointer event in the Initial pass, so nothing reaches the
- * WebView that is still composed behind the lock.
+ * Stops touches reaching the WebView that is still composed behind the lock,
+ * without swallowing the lock's own controls.
+ *
+ * The Main pass is deliberate. Initial runs parent to child, so consuming there
+ * ate the Unlock button's taps before the button ever saw them, which left
+ * anyone whose prompt was dismissed staring at a button that did nothing. Main
+ * runs child to parent, so children get first refusal and only what nobody
+ * handled is swallowed here.
  */
 private fun Modifier.blockTouches(): Modifier = pointerInput(Unit) {
     awaitPointerEventScope {
         while (true) {
-            awaitPointerEvent(PointerEventPass.Initial).changes.forEach { it.consume() }
+            awaitPointerEvent(PointerEventPass.Main).changes.forEach {
+                if (!it.isConsumed) it.consume()
+            }
         }
     }
 }
