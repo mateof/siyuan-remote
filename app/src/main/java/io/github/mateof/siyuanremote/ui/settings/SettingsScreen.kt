@@ -110,6 +110,9 @@ fun SettingsScreen(
                     enabled = biometricsAvailable,
                     onCheckedChange = callbacks.onAppLockChanged,
                 )
+                if (settings.appLockEnabled && biometricsAvailable) {
+                    LockGraceRow(settings.appLockGraceMinutes, callbacks.onAppLockGraceChanged)
+                }
                 HorizontalDivider()
             }
 
@@ -355,6 +358,52 @@ private fun NotebookSelector(
     }
 }
 
+/** How long the app may sit in the background before asking again. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LockGraceRow(minutes: Int, onChange: (Int) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+        Text(
+            text = stringResource(R.string.settings_lock_grace),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Box {
+            TextButton(onClick = { expanded = true }) { Text(lockGraceLabel(minutes)) }
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                AppSettings.GRACE_CHOICES.forEach { choice ->
+                    DropdownMenuItem(
+                        text = { Text(lockGraceLabel(choice)) },
+                        onClick = {
+                            expanded = false
+                            onChange(choice)
+                        },
+                    )
+                }
+            }
+        }
+        Text(
+            text = stringResource(R.string.settings_lock_grace_summary),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun lockGraceLabel(minutes: Int): String = stringResource(
+    when (minutes) {
+        0 -> R.string.lock_grace_immediately
+        1 -> R.string.lock_grace_1
+        5 -> R.string.lock_grace_5
+        15 -> R.string.lock_grace_15
+        30 -> R.string.lock_grace_30
+        60 -> R.string.lock_grace_60
+        else -> R.string.lock_grace_only_on_start
+    },
+)
+
 @Composable
 private fun TextZoomRow(zoom: Int, onChange: (Int) -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
@@ -425,6 +474,7 @@ data class SettingsCallbacks(
     val onServerChanged: (String, String) -> Unit,
     val onSignOut: () -> Unit,
     val onAppLockChanged: (Boolean) -> Unit,
+    val onAppLockGraceChanged: (Int) -> Unit,
     val onQuickButtonChanged: (Boolean) -> Unit,
     val onForceDesktopChanged: (Boolean) -> Unit,
     val onKeepScreenOnChanged: (Boolean) -> Unit,

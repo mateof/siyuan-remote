@@ -106,6 +106,7 @@ class SettingsActivity : ComponentActivity() {
                                 onServerChanged = viewModel::setServer,
                                 onSignOut = viewModel::signOut,
                                 onAppLockChanged = viewModel::setAppLock,
+                                onAppLockGraceChanged = viewModel::setAppLockGrace,
                                 onQuickButtonChanged = viewModel::setQuickButton,
                                 onForceDesktopChanged = viewModel::setForceDesktopUi,
                                 onKeepScreenOnChanged = viewModel::setKeepScreenOn,

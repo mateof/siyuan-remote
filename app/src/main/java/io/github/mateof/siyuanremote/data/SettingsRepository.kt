@@ -39,6 +39,10 @@ class SettingsRepository @Inject constructor(
     suspend fun setLastGoodUrl(url: String) = edit { it[Keys.LAST_GOOD_URL] = normalizeBaseUrl(url) }
 
     suspend fun setAppLockEnabled(enabled: Boolean) = edit { it[Keys.APP_LOCK] = enabled }
+
+    suspend fun setAppLockGraceMinutes(minutes: Int) = edit {
+        it[Keys.APP_LOCK_GRACE] = minutes
+    }
     suspend fun setKeepScreenOn(enabled: Boolean) = edit { it[Keys.KEEP_SCREEN_ON] = enabled }
     suspend fun setShowQuickButton(enabled: Boolean) = edit { it[Keys.QUICK_BUTTON] = enabled }
 
@@ -81,6 +85,7 @@ class SettingsRepository @Inject constructor(
         fallbackUrl = this[Keys.FALLBACK_URL].orEmpty(),
         lastGoodUrl = this[Keys.LAST_GOOD_URL].orEmpty(),
         appLockEnabled = this[Keys.APP_LOCK] ?: true,
+        appLockGraceMinutes = this[Keys.APP_LOCK_GRACE] ?: 30,
         keepScreenOn = this[Keys.KEEP_SCREEN_ON] ?: false,
         showQuickButton = this[Keys.QUICK_BUTTON] ?: true,
         quickButtonX = this[Keys.QUICK_BUTTON_X] ?: 1f,
@@ -106,6 +111,7 @@ class SettingsRepository @Inject constructor(
         val FALLBACK_URL = stringPreferencesKey("fallback_url")
         val LAST_GOOD_URL = stringPreferencesKey("last_good_url")
         val APP_LOCK = booleanPreferencesKey("app_lock")
+        val APP_LOCK_GRACE = intPreferencesKey("app_lock_grace_minutes")
         val KEEP_SCREEN_ON = booleanPreferencesKey("keep_screen_on")
         val QUICK_BUTTON = booleanPreferencesKey("quick_button")
         val QUICK_BUTTON_X = floatPreferencesKey("quick_button_x")

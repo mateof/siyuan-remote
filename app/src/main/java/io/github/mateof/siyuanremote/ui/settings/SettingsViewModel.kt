@@ -50,6 +50,7 @@ class SettingsViewModel @Inject constructor(
         settingsRepository.setServer(primary, fallback)
     }
 
+    fun setAppLockGrace(minutes: Int) = launchEdit { settingsRepository.setAppLockGraceMinutes(minutes) }
     fun setAppLock(enabled: Boolean) = launchEdit { settingsRepository.setAppLockEnabled(enabled) }
     fun setKeepScreenOn(enabled: Boolean) = launchEdit { settingsRepository.setKeepScreenOn(enabled) }
     fun setQuickButton(enabled: Boolean) = launchEdit { settingsRepository.setShowQuickButton(enabled) }

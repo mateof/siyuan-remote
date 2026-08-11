@@ -21,11 +21,6 @@ import androidx.fragment.app.FragmentActivity
  */
 object AppLock {
 
-    /**
-     * Leaving the app to pick a file or grant a permission should not re-prompt.
-     */
-    const val GRACE_PERIOD_MS = 60_000L
-
     fun availableAuthenticators(context: Context): Int? {
         val manager = BiometricManager.from(context)
         // BIOMETRIC_WEAK or DEVICE_CREDENTIAL is rejected on API 28-29, so the

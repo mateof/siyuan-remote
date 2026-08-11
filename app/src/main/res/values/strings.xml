@@ -165,4 +165,14 @@
     <string name="update_debug_signature_warning">This is a debug build. Android will refuse to install a release APK over it because the signatures differ.</string>
     <string name="settings_native_clipboard">Paste with formatting</string>
     <string name="settings_native_clipboard_summary">Reads the system clipboard directly. A WebView cannot grant the permission the web clipboard API needs, so without this, pasting keeps only plain text</string>
+    <!-- App lock grace period -->
+    <string name="settings_lock_grace">Ask again after</string>
+    <string name="settings_lock_grace_summary">How long the app can stay in the background before it asks for your fingerprint again. Opening a link or picking a file counts as leaving.</string>
+    <string name="lock_grace_immediately">Every time I leave</string>
+    <string name="lock_grace_1">1 minute</string>
+    <string name="lock_grace_5">5 minutes</string>
+    <string name="lock_grace_15">15 minutes</string>
+    <string name="lock_grace_30">30 minutes</string>
+    <string name="lock_grace_60">1 hour</string>
+    <string name="lock_grace_only_on_start">Only when the app starts</string>
 </resources>

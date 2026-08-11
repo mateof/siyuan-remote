@@ -10,7 +10,7 @@ Every item here exists because a browser tab cannot do it. Anything the SiYuan w
 
 ## Biometric app lock
 
-**On by default.** Because the password is stored forever, anyone holding an unlocked phone would otherwise reach every note. The prompt accepts biometrics or the device PIN, whichever the device supports, and re-arms after 60 seconds in the background so that picking a file or granting a permission does not force a second unlock.
+**On by default.** Because the password is stored forever, anyone holding an unlocked phone would otherwise reach every note. The prompt accepts biometrics or the device PIN, whichever the device supports, and re-arms after a wait you choose in **Settings → Security**: every time you leave, 1, 5, 15, 30 or 60 minutes, or only when the app starts. The default is 30 minutes, because a shorter one turns every trip to the browser into another fingerprint.
 
 Turn it off in **Settings → Security** if the phone never leaves your hand.
 

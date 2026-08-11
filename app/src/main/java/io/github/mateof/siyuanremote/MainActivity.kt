@@ -213,7 +213,11 @@ class MainActivity : FragmentActivity() {
 
         val lockEnabled = loaded.appLockEnabled && remember { AppLock.isAvailable(this) }
         var locked by rememberSaveable { mutableStateOf(lockEnabled) }
-        LockLifecycleEffect(enabled = lockEnabled, onLock = { locked = true })
+        LockLifecycleEffect(
+            enabled = lockEnabled,
+            graceMillis = loaded.appLockGraceMillis,
+            onLock = { locked = true },
+        )
 
         // The lock is drawn on top rather than replacing the content. Taking the
         // content out of the composition would release the AndroidView, destroy
@@ -610,18 +614,21 @@ class MainActivity : FragmentActivity() {
     }
 
     @Composable
-    private fun LockLifecycleEffect(enabled: Boolean, onLock: () -> Unit) {
+    private fun LockLifecycleEffect(enabled: Boolean, graceMillis: Long?, onLock: () -> Unit) {
         val lifecycleOwner = LocalLifecycleOwner.current
-        DisposableEffect(lifecycleOwner, enabled) {
+        DisposableEffect(lifecycleOwner, enabled, graceMillis) {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
                     Lifecycle.Event.ON_STOP ->
                         viewModel.backgroundedAt = SystemClock.elapsedRealtime()
 
                     Lifecycle.Event.ON_START -> {
+                        // A null grace means the lock never re-arms while the
+                        // process lives, so returning from anywhere is free.
+                        val grace = graceMillis ?: return@LifecycleEventObserver
                         val leftAt = viewModel.backgroundedAt
                         val awayFor = SystemClock.elapsedRealtime() - leftAt
-                        if (enabled && leftAt != 0L && awayFor > AppLock.GRACE_PERIOD_MS) {
+                        if (enabled && leftAt != 0L && awayFor > grace) {
                             onLock()
                         }
                     }

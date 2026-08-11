@@ -18,6 +18,12 @@ data class AppSettings(
     val lastGoodUrl: String = "",
 
     val appLockEnabled: Boolean = true,
+    /**
+     * How long the app may sit in the background before the lock re-arms.
+     * Zero locks on every return; [AppSettings.GRACE_ONLY_ON_START] locks only
+     * when the process starts, which is the loosest setting on offer.
+     */
+    val appLockGraceMinutes: Int = 30,
     val keepScreenOn: Boolean = false,
     /** Floating in-app button that opens settings, reload, capture and sync. */
     val showQuickButton: Boolean = true,
@@ -56,6 +62,19 @@ data class AppSettings(
     val captureTimestamp: Boolean = true,
 ) {
     val isConfigured: Boolean get() = primaryUrl.isNotBlank()
+
+    /** Grace period in milliseconds, or null when the lock should never re-arm. */
+    val appLockGraceMillis: Long?
+        get() = if (appLockGraceMinutes == GRACE_ONLY_ON_START) {
+            null
+        } else {
+            appLockGraceMinutes.coerceAtLeast(0) * 60_000L
+        }
+
+    companion object {
+        const val GRACE_ONLY_ON_START = -1
+        val GRACE_CHOICES = listOf(0, 1, 5, 15, 30, 60, GRACE_ONLY_ON_START)
+    }
 
     /** Candidate base URLs in the order they should be probed. */
     val candidateUrls: List<String>
